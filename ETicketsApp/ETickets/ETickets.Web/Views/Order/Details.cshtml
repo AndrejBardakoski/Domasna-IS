@@ -1,0 +1,59 @@
+﻿@using Microsoft.Extensions.Options
+@model ETickets.Domain.DTO.OrderDTO
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h1>Details for Order:</h1>
+    <h3>Id: @Model.Order.Id</h3>
+
+    <div class="row m-4">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Movie Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Ticket Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Order.TicketInOrders.Count == 0)
+            {
+                <tr>
+                    <td colspan="5">No Tickets in order</td>
+                </tr>
+            }
+            else
+            {
+                @for (int i = 0; i < Model.Order.TicketInOrders.Count; i++)
+                {
+                    var item = Model.Order.TicketInOrders.ElementAt(i);
+
+                    <tr>
+                        <th scope="row">@(i + 1)</th>
+                        <td>@item.Ticket.MovieName</td>
+                        <td>@item.Ticket.Date</td>
+                        <td>@item.Quantity</td>
+                        <td>$@item.Ticket.Price</td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot class="thead-dark">
+            <tr>
+                <th scope="col">TotalPrice:</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">$@Model.TotalPrice</th>
+            </tr>
+        </tfoot>
+    </table>
+    </div>
+    <td><a asp-controller="Order" asp-action="GeneratePDF" asp-route-id="@Model.Order.Id" class="btn btn-danger">GeneratePDF</a></td>
+
+</div>

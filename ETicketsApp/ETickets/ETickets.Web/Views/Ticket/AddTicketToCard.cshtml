@@ -1,0 +1,34 @@
+﻿@model ETickets.Domain.DTO.AddToShoppingCardDto
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="text-center">Add selected Ticket to your shopping card!</h3>
+
+<div class="row mt-4">
+    <div class="col-md-4 m-auto">
+        <form method="post" asp-action="AddTicketToCard">
+            <input type="hidden" asp-for="SelectedTicketId" />
+            <div class="form-group">
+                <label asp-for="SelectedTicket.MovieName"></label>
+                <input disabled asp-for="SelectedTicket.MovieName" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SelectedTicket.Date"></label>
+                <input disabled asp-for="SelectedTicket.Date" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Quantity"></label>
+                <input type="number" asp-for="Quantity" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
