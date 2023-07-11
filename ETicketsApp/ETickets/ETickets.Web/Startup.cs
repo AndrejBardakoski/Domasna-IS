@@ -40,6 +40,7 @@ namespace ETickets.Web
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
+            services.AddScoped(typeof(ITicketRepository), typeof(TicketRepository));
 
 
             services.AddTransient<ITicketService, Service.Implementation.TicketService>();

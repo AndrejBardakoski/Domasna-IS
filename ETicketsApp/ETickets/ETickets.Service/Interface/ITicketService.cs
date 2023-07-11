@@ -9,6 +9,7 @@ namespace ETickets.Service.Interface
     public interface ITicketService
     {
         List<Ticket> GetAllTickets();
+        List<Ticket> GetTicketsByDate(DateTime dateBegin,DateTime dateEnd);
         Ticket GetDetailsForTicket(Guid? id);
         void CreateNewTicket(Ticket p);
         void UpdeteExistingTicket(Ticket p);

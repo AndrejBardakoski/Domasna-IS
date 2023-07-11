@@ -12,11 +12,11 @@ namespace ETickets.Service.Implementation
 {
     public class TicketService : ITicketService
     {
-        private readonly IRepository<Ticket> _TicketRepository;
+        private readonly ITicketRepository _TicketRepository;
         private readonly IRepository<TicketInShoppingCart> _TicketInShoppingCartRepository;
         private readonly IUserRepository _userRepository;
 
-        public TicketService(IRepository<Ticket> TicketRepository, IRepository<TicketInShoppingCart> TicketInShoppingCartRepository, IUserRepository userRepository)
+        public TicketService(ITicketRepository TicketRepository, IRepository<TicketInShoppingCart> TicketInShoppingCartRepository, IUserRepository userRepository)
         {
             _TicketRepository = TicketRepository;
             _userRepository = userRepository;
@@ -98,6 +98,11 @@ namespace ETickets.Service.Implementation
             };
 
             return model;
+        }
+
+        public List<Ticket> GetTicketsByDate(DateTime dateBegin, DateTime dateEnd)
+        {
+            return this._TicketRepository.GetFilterByDate(dateBegin,dateEnd).ToList();
         }
 
         public void UpdeteExistingTicket(Ticket p)

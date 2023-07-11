@@ -11,7 +11,7 @@ namespace Etickets.Repository.Implementation
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly ApplicationDbContext context;
-        private DbSet<T> entities;
+        protected DbSet<T> entities;
         string errorMessage = string.Empty;
 
         public Repository(ApplicationDbContext context)

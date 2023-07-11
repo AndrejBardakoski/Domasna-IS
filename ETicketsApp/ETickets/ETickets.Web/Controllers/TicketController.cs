@@ -47,8 +47,6 @@ namespace ETickets.Web.Controllers
         }
 
         // POST: Tickets/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Id,Date,Price,MovieName,Image,Genre")] Ticket Ticket)
@@ -79,8 +77,6 @@ namespace ETickets.Web.Controllers
         }
 
         // POST: Tickets/Edit/id
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id, [Bind("Id,Date,Price,MovieName,Image,Genre")] Ticket Ticket)
@@ -163,6 +159,13 @@ namespace ETickets.Web.Controllers
         private bool TicketExists(Guid id)
         {
             return this._TicketService.GetDetailsForTicket(id) != null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult FilterByDate(DateTime dateBegin,DateTime dateEnd)
+        {
+            return View("Index", this._TicketService.GetTicketsByDate(dateBegin, dateEnd));
         }
     }
 }
