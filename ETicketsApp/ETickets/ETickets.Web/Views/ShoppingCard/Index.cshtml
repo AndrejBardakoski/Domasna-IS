@@ -1,5 +1,5 @@
 ﻿@using Microsoft.Extensions.Options
-@*@inject IOptions<ETickets.Domain.StripeSettings> Stripe*@
+@inject IOptions<ETickets.Domain.StripeSettings> Stripe
 @model ETickets.Domain.DTO.ShoppingCartDto
 
 @{
@@ -13,7 +13,7 @@
     <div class="row m-4">
         @if (Model.TotalPrice != 0)
         {
-@*            <form asp-controller="ShoppingCard" asp-action="PayOrder" method="post">
+            <form asp-controller="ShoppingCard" asp-action="Order" method="post">
                 <article>
                     <script src="https://checkout.stripe.com/checkout.js"
                             class="stripe-button"
@@ -24,10 +24,7 @@
                             data-label="Pay $@Model.TotalPrice">
                     </script>
                 </article>
-            </form>*@
-            <div class="row m-4">
-                <a asp-controller="ShoppingCard" asp-action="Order" class="btn btn-info">Order Now</a>
-            </div>
+            </form>
         }
     </div>
 
@@ -79,5 +76,4 @@
             </tfoot>
         </table>
     </div>
-
 </div>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System;
+using Stripe;
 
 namespace ETickets.Web.Controllers
 {
@@ -58,38 +59,27 @@ namespace ETickets.Web.Controllers
         }
         public bool PayOrder(string stripeEmail, string stripeToken)
         {
-            //var customerService = new CustomerService();
-            //var chargeService = new ChargeService();
-            //string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customerService = new CustomerService();
+            var chargeService = new ChargeService();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            //var order = this._shoppingCartService.getShoppingCartInfo(userId);
+            var order = this._shoppingCartService.getShoppingCartInfo(userId);
 
-            //var customer = customerService.Create(new CustomerCreateOptions
-            //{
-            //    Email = stripeEmail,
-            //    Source = stripeToken
-            //});
+            var customer = customerService.Create(new CustomerCreateOptions
+            {
+                Email = stripeEmail,
+                Source = stripeToken
+            });
 
-            //var charge = chargeService.Create(new ChargeCreateOptions
-            //{
-            //    Amount = (Convert.ToInt32(order.TotalPrice) * 100),
-            //    Description = "EShop Application Payment",
-            //    Currency = "usd",
-            //    Customer = customer.Id
-            //});
+            var charge = chargeService.Create(new ChargeCreateOptions
+            {
+                Amount = ((long)(order.TotalPrice * 100)),
+                Description = "ETicket Payment",
+                Currency = "usd",
+                Customer = customer.Id
+            });
 
-            //if (charge.Status == "succeeded")
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-
-
-            // to be implemented
-            return true;
+            return charge.Status == "succeeded";
         }
     }
 }

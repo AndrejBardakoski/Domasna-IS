@@ -1,6 +1,7 @@
 using Etickets.Repository;
 using Etickets.Repository.Implementation;
 using Etickets.Repository.Interface;
+using ETickets.Domain;
 using ETickets.Domain.Identity;
 using ETickets.Service.Interface;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +44,7 @@ namespace ETickets.Web
             services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
             services.AddScoped(typeof(ITicketRepository), typeof(TicketRepository));
 
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             services.AddTransient<ITicketService, Service.Implementation.TicketService>();
             services.AddTransient<IShoppingCartService, Service.Implementation.ShoppingCartService>();
@@ -54,6 +57,7 @@ namespace ETickets.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.SetApiKey(Configuration.GetSection("Stripe")["SecretKey"]);
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
