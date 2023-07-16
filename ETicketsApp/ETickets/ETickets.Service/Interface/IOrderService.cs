@@ -12,5 +12,7 @@ namespace ETickets.Service.Interface
         public List<Order> getAllOrders();
         public OrderDTO getOrderDetails(Guid Id);
         public List<Order> getOrdersForUser(string userId);
+
+        public EmailDTO getOrderEmail(Guid orderId);
     }
 }

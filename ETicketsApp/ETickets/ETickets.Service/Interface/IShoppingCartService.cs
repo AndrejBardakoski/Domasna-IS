@@ -9,6 +9,6 @@ namespace ETickets.Service.Interface
     {
         ShoppingCartDto getShoppingCartInfo(string userId);
         bool deleteTicketFromSoppingCart(string userId, Guid TicketId);
-        bool order(string userId);
+        Guid order(string userId);  // return orderId
     }
 }

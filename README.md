@@ -12,16 +12,21 @@ show only tickets beetween 23.07.2023 and 30.07.2023
 ## Add new ticket page
 ![Image add new ticket page](/Screenshots/AddNewTicket.png)
 ## Edit ticket page
-![Image edit ticket page](/Screenshots/EditTicket.png)
+![Image edit ticket page](/Screenshots/Edit_Ticket.png)
 ## Add to shopping cart page
 ![Image of add to shopping cart page](/Screenshots/AddToCart.png)
 ## Shopping cart page
 ![Image of shopping cart page](/Screenshots/ShoppingCart.png)
 ## Payment
-we are useing [Stripe](https://stripe.com/) with test payments
+we are useing [Stripe](https://stripe.com/) with test payments\
 ![Image payment useing stripe](/Screenshots/Payment.png)
 ## Stripe dashboard
 ![Image stripe dashboard page](/Screenshots/Stripe.png)
+## Sending Email
+#### Sender
+![Image sent email](/Screenshots/EmailSender.png)
+#### Receiver
+![Image received email](/Screenshots/EmailReceiver.png)
 ## Orders page
 ![Image of orders page](/Screenshots/Orders.png)
 ## Order details page

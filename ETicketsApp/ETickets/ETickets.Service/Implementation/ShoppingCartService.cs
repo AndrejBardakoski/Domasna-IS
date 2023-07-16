@@ -82,7 +82,7 @@ namespace ETickets.Service.Implementation
             return new ShoppingCartDto();
         }
 
-        public bool order(string userId)
+        public Guid order(string userId)
         {
             if (!string.IsNullOrEmpty(userId))
             {
@@ -145,10 +145,10 @@ namespace ETickets.Service.Implementation
                 this._userRepository.Update(loggedInUser);
                 //this._mailRepository.Insert(mail);
 
-                return true;
+                return order.Id;
             }
 
-            return false;
+            return new Guid("");
         }
     }
 }

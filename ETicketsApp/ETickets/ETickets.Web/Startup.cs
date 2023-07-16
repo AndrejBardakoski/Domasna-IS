@@ -3,6 +3,7 @@ using Etickets.Repository.Implementation;
 using Etickets.Repository.Interface;
 using ETickets.Domain;
 using ETickets.Domain.Identity;
+using ETickets.Service.Implementation;
 using ETickets.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,9 +24,12 @@ namespace ETickets.Web
 {
     public class Startup
     {
+        private EmailSettings emailSettings;
         public Startup(IConfiguration configuration)
         {
+            emailSettings = new EmailSettings();
             Configuration = configuration;
+            Configuration.GetSection("EmailSettings").Bind(emailSettings);
         }
 
         public IConfiguration Configuration { get; }
@@ -43,6 +47,8 @@ namespace ETickets.Web
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
             services.AddScoped(typeof(ITicketRepository), typeof(TicketRepository));
+            services.AddScoped<EmailSettings>(es => emailSettings);
+            services.AddScoped<IEmailService, EmailService>(email => new EmailService(emailSettings));
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 

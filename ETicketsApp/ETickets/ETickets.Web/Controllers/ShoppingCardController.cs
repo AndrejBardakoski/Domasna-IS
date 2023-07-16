@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System;
 using Stripe;
+using System.Threading.Tasks;
 
 namespace ETickets.Web.Controllers
 {
@@ -10,10 +11,16 @@ namespace ETickets.Web.Controllers
     {
 
         private readonly IShoppingCartService _shoppingCartService;
+        private readonly IOrderService _orderService;
+        private readonly IEmailService _emailService;
 
-        public ShoppingCardController(IShoppingCartService shoppingCartService)
+
+
+        public ShoppingCardController(IShoppingCartService shoppingCartService, IOrderService orderService, IEmailService emailService)
         {
             _shoppingCartService = shoppingCartService;
+            _orderService = orderService;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -40,24 +47,25 @@ namespace ETickets.Web.Controllers
             }
         }
 
-        public IActionResult Order(string stripeEmail=null, string stripeToken=null)
+        public async Task<IActionResult> OrderAsync(string stripeEmail=null, string stripeToken=null)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             if (!this.PayOrder(stripeEmail, stripeToken))
                 throw new Exception();
-            this.SendEmail();
 
-            if(this._shoppingCartService.order(userId))
-                return RedirectToAction("Index", "ShoppingCard");
-            throw new Exception();
+            var orderId = this._shoppingCartService.order(userId);
+
+            this.SendEmailAsync(orderId);
+
+            return RedirectToAction("Index", "ShoppingCard");
         }
-        public bool SendEmail()
+        private void SendEmailAsync(Guid orderId)
         {
-            // to be implemented
-            return true;
+            var mail = _orderService.getOrderEmail(orderId);
+            _emailService.SendEmailAsync(mail);
         }
-        public bool PayOrder(string stripeEmail, string stripeToken)
+        private bool PayOrder(string stripeEmail, string stripeToken)
         {
             var customerService = new CustomerService();
             var chargeService = new ChargeService();
